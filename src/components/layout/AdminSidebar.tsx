@@ -81,7 +81,8 @@ export function AdminSidebar() {
   const filteredMenuItems = superadminNoOrg ? [] : menuItems.filter(item => hasPermission(item.section));
   const filteredCatalogItems = superadminNoOrg ? [] : catalogItems.filter(item => hasPermission(item.section));
   const filteredSystemItems = systemItems.filter(item => {
-    if (superadminNoOrg) return item.section === 'organizations';
+    if (item.section === 'organizations') return isSuperadmin && !isManagingOrg;
+    if (superadminNoOrg) return false;
     return hasPermission(item.section);
   });
 

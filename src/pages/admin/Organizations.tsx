@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Building2, Edit, Eye, EyeOff, LogIn } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { useActiveOrganization } from "@/hooks/useActiveOrganization"
+import { AVAILABLE_SECTIONS } from "@/hooks/usePermissions"
 import { DataTable } from "@/components/ui/data-table"
 import { PageHeader } from "@/components/ui/page-header"
 import { supabase } from "@/integrations/supabase/client"
@@ -54,6 +55,9 @@ type OrganizationFormData = {
   stripe_webhook_secret_enc: string
   n8n_webhook_url: string
   active: boolean
+  admin_email: string
+  admin_name: string
+  admin_password: string
 }
 
 export default function Organizations() {
@@ -61,6 +65,8 @@ export default function Organizations() {
   const [loading, setLoading] = useState(true)
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [existingAdmin, setExistingAdmin] = useState<{ email: string; name: string } | null>(null)
+  const [changingPassword, setChangingPassword] = useState(false)
   const { toast } = useToast()
   const navigate = useNavigate()
   const { setActiveOrgId } = useActiveOrganization()
@@ -82,6 +88,9 @@ export default function Organizations() {
       stripe_webhook_secret_enc: "",
       n8n_webhook_url: "",
       active: true,
+      admin_email: "",
+      admin_name: "",
+      admin_password: "",
     },
   })
 
@@ -205,8 +214,21 @@ export default function Organizations() {
     }
   }
 
-  const openEditDialog = (org: Organization) => {
+  const openEditDialog = async (org: Organization) => {
     setSelectedOrg(org)
+
+    // Fetch existing org admin (manager)
+    const { data: admin } = await supabase
+      .from('admin_users')
+      .select('email, name')
+      .eq('organization_id', org.id)
+      .eq('role', 'manager')
+      .limit(1)
+      .maybeSingle()
+
+    setExistingAdmin(admin)
+    setChangingPassword(false)
+
     form.reset({
       name: org.name,
       slug: org.slug,
@@ -218,12 +240,17 @@ export default function Organizations() {
       stripe_webhook_secret_enc: "",
       n8n_webhook_url: org.n8n_webhook_url || "",
       active: org.active,
+      admin_email: admin?.email || "",
+      admin_name: admin?.name || "",
+      admin_password: "",
     })
     setDialogOpen(true)
   }
 
   const openCreateDialog = () => {
     setSelectedOrg(null)
+    setExistingAdmin(null)
+    setChangingPassword(false)
     form.reset({
       name: "",
       slug: "",
@@ -235,6 +262,9 @@ export default function Organizations() {
       stripe_webhook_secret_enc: "",
       n8n_webhook_url: "",
       active: true,
+      admin_email: "",
+      admin_name: "",
+      admin_password: "",
     })
     setDialogOpen(true)
   }
@@ -261,19 +291,55 @@ export default function Organizations() {
       }
 
       if (selectedOrg) {
+        // --- EDITAR ---
         const { error } = await supabase
           .from('organizations')
           .update(cleanedData)
           .eq('id', selectedOrg.id)
 
         if (error) throw error
+
+        // Change admin password if requested
+        if (changingPassword && data.admin_password && existingAdmin) {
+          const res = await supabase.functions.invoke('change-user-password', {
+            body: {
+              target_email: existingAdmin.email,
+              new_password: data.admin_password,
+            }
+          })
+          if (res.error) throw new Error(res.error.message)
+        }
+
         toast({ title: "Exito", description: "Organizacion actualizada" })
       } else {
-        const { error } = await supabase
+        // --- CREAR ---
+        const { data: newOrg, error } = await supabase
           .from('organizations')
           .insert([cleanedData])
+          .select('id')
+          .single()
 
         if (error) throw error
+
+        // Create org admin if email provided
+        if (data.admin_email) {
+          const allSections = AVAILABLE_SECTIONS
+            .filter(s => s.key !== 'organizations')
+            .map(s => s.key)
+
+          const res = await supabase.functions.invoke('create-admin-user', {
+            body: {
+              email: data.admin_email,
+              password: data.admin_password,
+              name: data.admin_name || data.admin_email,
+              role: 'manager',
+              organization_id: newOrg.id,
+              allowed_sections: allSections,
+            }
+          })
+          if (res.error) throw new Error(res.error.message)
+        }
+
         toast({ title: "Exito", description: "Organizacion creada" })
       }
 
@@ -548,6 +614,106 @@ export default function Organizations() {
                     </FormItem>
                   )}
                 />
+              </div>
+
+              {/* Administrador Principal */}
+              <div className="border-t pt-4">
+                <h4 className="text-sm font-medium mb-3">Administrador Principal</h4>
+
+                {selectedOrg && existingAdmin ? (
+                  // MODO EDICION: mostrar admin actual
+                  <div className="space-y-4">
+                    <div className="bg-muted/50 rounded-md p-3">
+                      <p className="text-sm"><strong>Email:</strong> {existingAdmin.email}</p>
+                      <p className="text-sm"><strong>Nombre:</strong> {existingAdmin.name}</p>
+                    </div>
+                    {!changingPassword ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setChangingPassword(true)}
+                      >
+                        Cambiar contraseña
+                      </Button>
+                    ) : (
+                      <FormField
+                        control={form.control}
+                        name="admin_password"
+                        rules={{ minLength: { value: 8, message: "Minimo 8 caracteres" } }}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nueva contraseña</FormLabel>
+                            <FormControl>
+                              <Input type="password" placeholder="Minimo 8 caracteres" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                  </div>
+                ) : !selectedOrg ? (
+                  // MODO CREACION: campos email + nombre + contraseña
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="admin_email"
+                        rules={{
+                          required: "El email del admin es obligatorio",
+                          pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Email invalido",
+                          },
+                        }}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email del admin *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="admin@clinica.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="admin_name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Nombre</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Nombre del administrador" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <FormField
+                      control={form.control}
+                      name="admin_password"
+                      rules={{
+                        required: "La contraseña es obligatoria",
+                        minLength: { value: 8, message: "Minimo 8 caracteres" },
+                      }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Contraseña *</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="Minimo 8 caracteres" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Esta organizacion no tiene administrador asignado.
+                  </p>
+                )}
               </div>
 
               <div className="flex justify-end gap-2 border-t pt-4">

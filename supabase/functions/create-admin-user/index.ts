@@ -68,9 +68,9 @@ serve(async (req) => {
       )
     }
 
-    const { email, password, professional_id, role, allowed_sections, active } = await req.json()
+    const { email, password, professional_id, role, allowed_sections, active, organization_id, name } = await req.json()
 
-    if (!email || !password || !professional_id || !role || !allowed_sections) {
+    if (!email || !password || !role || !allowed_sections) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         {
@@ -80,21 +80,18 @@ serve(async (req) => {
       )
     }
 
-    // Get professional data
-    const { data: professional } = await supabaseAdmin
-      .from('professionals')
-      .select('name')
-      .eq('id', professional_id)
-      .single()
+    // Resolve admin name: from professional if linked, otherwise from payload or email
+    let adminName = name || email
+    if (professional_id) {
+      const { data: professional } = await supabaseAdmin
+        .from('professionals')
+        .select('name')
+        .eq('id', professional_id)
+        .single()
 
-    if (!professional) {
-      return new Response(
-        JSON.stringify({ error: 'Professional not found' }),
-        {
-          status: 404,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      )
+      if (professional) {
+        adminName = professional.name
+      }
     }
 
     // Create user in Auth with admin privileges
@@ -103,7 +100,7 @@ serve(async (req) => {
       password,
       email_confirm: true, // Skip email verification
       user_metadata: {
-        name: professional.name,
+        name: adminName,
         role: role
       }
     })
@@ -122,10 +119,11 @@ serve(async (req) => {
     const { error: dbError } = await supabaseAdmin
       .from('admin_users')
       .insert({
-        name: professional.name,
+        name: adminName,
         email: email,
         role: role,
-        professional_id: professional_id,
+        professional_id: professional_id || null,
+        organization_id: organization_id || null,
         allowed_sections: allowed_sections,
         active: active ?? true,
       })

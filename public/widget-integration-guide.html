@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Integración - Widget de Reservas Pleno</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f8fafc;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { color: #1e293b; border-bottom: 3px solid #ef4444; padding-bottom: 10px; }
+    h2 { color: #334155; margin-top: 30px; }
+    h3 { color: #475569; }
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 14px;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+    .example {
+      background: #f0f9ff;
+      border-left: 4px solid #0ea5e9;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .warning {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .config-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    .config-table th,
+    .config-table td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: left;
+    }
+    .config-table th {
+      background: #f8fafc;
+      font-weight: 600;
+    }
+    .demo-button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px;
+    }
+    .demo-button:hover {
+      background: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Widget de Reservas Pleno - Guía de Integración</h1>
+    
+    <h2>📋 Integración Básica</h2>
+    <p>Para integrar el widget en tu sitio web, simplemente añade este código antes del cierre del tag <code>&lt;/body&gt;</code>:</p>
+    
+    <pre><code>&lt;!-- Widget de Reservas Pleno --&gt;
+&lt;script src="https://tu-dominio.com/widget-embed.v2.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  // Inicializar widget con configuración básica
+  initPlenoWidget({
+    companyName: 'Tu Centro de Bienestar',
+    companyAddress: 'Tu dirección completa',
+    bookingUrl: 'https://tu-dominio.com/widget'
+  });
+&lt;/script&gt;</code></pre>
+
+    <h2>⚙️ Configuración Avanzada</h2>
+    
+    <table class="config-table">
+      <thead>
+        <tr>
+          <th>Propiedad</th>
+          <th>Tipo</th>
+          <th>Por Defecto</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>backgroundColor</code></td>
+          <td>string</td>
+          <td>'rgba(37, 44, 88, 1)'</td>
+          <td>Color de fondo del widget</td>
+        </tr>
+        <tr>
+          <td><code>primaryColor</code></td>
+          <td>string</td>
+          <td>'#ef4444'</td>
+          <td>Color principal (botones, headers)</td>
+        </tr>
+        <tr>
+          <td><code>textColor</code></td>
+          <td>string</td>
+          <td>'#ffffff'</td>
+          <td>Color del texto</td>
+        </tr>
+        <tr>
+          <td><code>width</code></td>
+          <td>string</td>
+          <td>'384px'</td>
+          <td>Ancho del widget</td>
+        </tr>
+        <tr>
+          <td><code>height</code></td>
+          <td>string</td>
+          <td>'100vh'</td>
+          <td>Altura del widget</td>
+        </tr>
+        <tr>
+          <td><code>position</code></td>
+          <td>string</td>
+          <td>'fixed'</td>
+          <td>Posición CSS (fixed, absolute)</td>
+        </tr>
+        <tr>
+          <td><code>right</code></td>
+          <td>string</td>
+          <td>'20px'</td>
+          <td>Distancia desde la derecha</td>
+        </tr>
+        <tr>
+          <td><code>top</code></td>
+          <td>string</td>
+          <td>'20px'</td>
+          <td>Distancia desde arriba</td>
+        </tr>
+        <tr>
+          <td><code>autoOpen</code></td>
+          <td>boolean</td>
+          <td>false</td>
+          <td>Abrir automáticamente al cargar</td>
+        </tr>
+        <tr>
+          <td><code>showCloseButton</code></td>
+          <td>boolean</td>
+          <td>true</td>
+          <td>Mostrar botón de cerrar</td>
+        </tr>
+        <tr>
+          <td><code>triggerSelector</code></td>
+          <td>string</td>
+          <td>null</td>
+          <td>Selector CSS para elementos que abren el widget</td>
+        </tr>
+        <tr>
+          <td><code>companyName</code></td>
+          <td>string</td>
+          <td>'Centro Pleno'</td>
+          <td>Nombre de tu empresa</td>
+        </tr>
+        <tr>
+          <td><code>companyAddress</code></td>
+          <td>string</td>
+          <td>Dirección por defecto</td>
+          <td>Dirección de tu centro</td>
+        </tr>
+        <tr>
+          <td><code>bookingUrl</code></td>
+          <td>string</td>
+          <td>URL actual + '/widget'</td>
+          <td>URL de tu página de reservas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>🎨 Ejemplos de Uso</h2>
+
+    <h3>Configuración Personalizada</h3>
+    <pre><code>initPlenoWidget({
+  backgroundColor: 'rgba(30, 64, 175, 1)', // Azul personalizado
+  primaryColor: '#10b981', // Verde
+  width: '400px',
+  height: '600px',
+  companyName: 'Clínica Wellness',
+  companyAddress: 'Calle Principal 123, Madrid',
+  autoOpen: false,
+  showCloseButton: true,
+  bookingUrl: 'https://mi-clinica.com/reservas'
+});</code></pre>
+
+    <h3>Widget con Trigger Personalizado</h3>
+    <pre><code>&lt;!-- En tu HTML --&gt;
+&lt;button class="mi-boton-reserva"&gt;Reservar Cita&lt;/button&gt;
+&lt;a href="#" class="link-reserva"&gt;Pedir cita aquí&lt;/a&gt;
+
+&lt;script&gt;
+initPlenoWidget({
+  triggerSelector: '.mi-boton-reserva, .link-reserva', // Múltiples selectores
+  autoOpen: false,
+  companyName: 'Tu Centro'
+});
+&lt;/script&gt;</code></pre>
+
+    <h3>Widget Responsivo</h3>
+    <pre><code>initPlenoWidget({
+  width: window.innerWidth < 768 ? '100vw' : '400px',
+  height: window.innerWidth < 768 ? '100vh' : '600px',
+  right: window.innerWidth < 768 ? '0' : '20px',
+  top: window.innerWidth < 768 ? '0' : '20px'
+});</code></pre>
+
+    <h2>🔧 API de Control</h2>
+    <p>Una vez inicializado, puedes controlar el widget mediante JavaScript:</p>
+
+    <pre><code>// Abrir el widget
+PlenoWidget.open();
+
+// Cerrar el widget
+PlenoWidget.close();
+
+// Alternar visibilidad
+PlenoWidget.toggle();
+
+// Verificar si está abierto
+if (PlenoWidget.isOpen()) {
+  console.log('Widget está abierto');
+}
+
+// Destruir completamente el widget
+PlenoWidget.destroy();</code></pre>
+
+    <div class="example">
+      <h3>💡 Ejemplo Interactivo</h3>
+      <p>Prueba los controles del widget:</p>
+      <button class="demo-button" onclick="if(window.PlenoWidget) PlenoWidget.open()">Abrir Widget</button>
+      <button class="demo-button" onclick="if(window.PlenoWidget) PlenoWidget.close()">Cerrar Widget</button>
+      <button class="demo-button" onclick="if(window.PlenoWidget) PlenoWidget.toggle()">Alternar</button>
+    </div>
+
+    <h2>🚀 Integración por Configuración Global</h2>
+    <p>También puedes configurar el widget antes de cargar el script:</p>
+
+    <pre><code>&lt;script&gt;
+// Configuración global (antes de cargar el script)
+window.plenoWidgetConfig = {
+  companyName: 'Mi Centro de Salud',
+  primaryColor: '#059669',
+  autoOpen: false
+};
+&lt;/script&gt;
+&lt;script src="https://tu-dominio.com/widget-embed.v2.js"&gt;&lt;/script&gt;</code></pre>
+
+    <div class="warning">
+      <h3>⚠️ Consideraciones Importantes</h3>
+      <ul>
+        <li><strong>HTTPS:</strong> El widget debe servirse desde HTTPS para funcionar correctamente</li>
+        <li><strong>CORS:</strong> Asegúrate de que tu servidor permita el embedding del iframe</li>
+        <li><strong>Responsive:</strong> El widget se adapta automáticamente a pantallas móviles</li>
+        <li><strong>Performance:</strong> El script es ligero (~15KB) y no afecta la carga de tu página</li>
+        <li><strong>Privacidad:</strong> Cumple con GDPR - no almacena cookies de terceros</li>
+      </ul>
+    </div>
+
+    <h2>🔐 Configuración del Servidor</h2>
+    <p>En tu servidor, asegúrate de permitir el embedding:</p>
+
+    <pre><code># En .htaccess (Apache)
+Header always append X-Frame-Options SAMEORIGIN
+
+# En nginx.conf
+add_header X-Frame-Options SAMEORIGIN;
+
+# O para permitir dominios específicos:
+# add_header X-Frame-Options "ALLOW-FROM https://cliente.com";</code></pre>
+
+    <h2>📱 Soporte Móvil</h2>
+    <p>El widget incluye soporte automático para dispositivos móviles:</p>
+    <ul>
+      <li>Se adapta a pantalla completa en móviles (&lt; 480px)</li>
+      <li>Gestos táctiles optimizados</li>
+      <li>Botón flotante responsivo</li>
+      <li>Carga rápida en conexiones lentas</li>
+    </ul>
+
+    <h2>🎯 Casos de Uso Comunes</h2>
+
+    <h3>1. Sitio Web Corporativo</h3>
+    <pre><code>initPlenoWidget({
+  companyName: 'Clínica Santa María',
+  primaryColor: '#2563eb', // Azul corporativo
+  position: 'fixed',
+  right: '30px',
+  autoOpen: false
+});</code></pre>
+
+    <h3>2. Landing Page</h3>
+    <pre><code>initPlenoWidget({
+  triggerSelector: '.cta-button',
+  autoOpen: true, // Abrir inmediatamente
+  showCloseButton: true
+});</code></pre>
+
+    <h3>3. App Móvil (WebView)</h3>
+    <pre><code>initPlenoWidget({
+  width: '100vw',
+  height: '100vh',
+  right: '0',
+  top: '0',
+  position: 'fixed'
+});</code></pre>
+
+    <p style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #64748b; text-align: center;">
+      <strong>¿Necesitas ayuda?</strong><br>
+      Contacta con nuestro equipo de soporte para asistencia personalizada.
+    </p>
+  </div>
+
+  <!-- Script de demostración -->
+  <script>
+    // Solo para la demo de esta página
+    console.log('Guía de integración cargada');
+    
+    // Simular PlenoWidget para la demo
+    if (!window.PlenoWidget) {
+      window.PlenoWidget = {
+        open: () => alert('Demo: Widget abierto'),
+        close: () => alert('Demo: Widget cerrado'),
+        toggle: () => alert('Demo: Widget alternado'),
+        isOpen: () => false
+      };
+    }
+  </script>
+</body>
+</html>

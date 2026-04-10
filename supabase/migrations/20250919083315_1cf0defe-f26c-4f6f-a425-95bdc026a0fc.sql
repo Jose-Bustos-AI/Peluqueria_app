@@ -1,0 +1,1 @@
+UPDATE settings SET value = 'true' WHERE key = 'payments.prices_include_vat';

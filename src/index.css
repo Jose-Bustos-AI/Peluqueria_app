@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ... keep existing code (design tokens, base styles) */
+
+/* Calendar overlays */
+.hours-off {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.hours-off-professional {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(59, 130, 246, 0.4),
+    rgba(59, 130, 246, 0.4) 8px,
+    rgba(59, 130, 246, 0.1) 8px,
+    rgba(59, 130, 246, 0.1) 16px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+:root {
+  --slot-line-offset: 20px; /* súper bruto: era 12px, ahora 20px */
+}
+
+/* ADMIN: restaurar visibilidad completa de las tarjetas */
+main[class*="bg-muted/30"] .z-20.absolute.rounded-md.border {
+  clip-path: none;
+  outline: 1px solid rgba(0,0,0,.06);
+  outline-offset: -1px;
+  background-clip: padding-box;
+  /* Altura dinámica al 100% del slot - SIN min-height */
+}
+
+/* ADMIN: Forzar texto oscuro y visible en todas las tarjetas */
+main[class*="bg-muted/30"] .z-20.absolute.rounded-md.border * {
+  color: #1a1a1a !important;
+}
+
+
+/* Admin calendar: desplazar SOLO la línea de cada franja hacia abajo */
+main[class*="bg-muted/30"] .h-16.border-b.border-border {
+  border-bottom: none;          /* quitamos el borde real */
+  position: relative;           /* base para el pseudo-elemento */
+}
+
+main[class*="bg-muted/30"] .h-16.border-b.border-border::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: hsl(var(--border));      /* mismo color de borde */
+  bottom: 0;
+  transform: translateY(var(--slot-line-offset)); /* baja SOLO la línea */
+  pointer-events: none;
+}
+
+/* Evitar línea extra tras la última franja (21:00) */
+main[class*="bg-muted/30"] .h-16.border-b.border-border:last-child::after {
+  display: none;
+}
+
+/* Fallback si el calendario fuese FullCalendar en admin */
+main[class*="bg-muted/30"] .fc .fc-timegrid-event {
+  clip-path: inset(1px 0 6px 0 round 6px);
+  outline: 1px solid rgba(0,0,0,0.06);
+  outline-offset: -1px;
+}
+
+/* Reservas Pro Design System - Professional booking platform aesthetic
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Admin Panel Theme - Light backgrounds with blue accents */
+    --background: 225 20% 95%; /* #eef0f6 */
+    --foreground: 0 0% 15%; /* Dark text */
+
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    /* Primary uses blue accent */
+    --primary: 217 91% 70%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 217 91% 65%;
+    --primary-light: 217 91% 80%;
+
+    /* Secondary is custom red */
+    --secondary: 2 68% 51%; /* rgba(216, 53, 46, 1) */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 225 20% 90%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Accent system */
+    --accent: 217 60% 45%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217 50% 45%;
+    --input: 217 50% 40%;
+    --ring: 4 78% 49%;
+
+    /* Mobile gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 75% 32%), hsl(217 75% 42%));
+    --gradient-secondary: linear-gradient(135deg, hsl(4 78% 49%), hsl(4 78% 59%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 75% 32%), hsl(210 100% 56%));
+    
+    /* Mobile shadows */
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-elevated: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-primary: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+
+    /* Smooth transitions */
+    --transition-base: all 0.2s ease-in-out;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 217 70% 28%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 4 78% 49%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 217 60% 40%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 217 50% 45%;
+    --sidebar-ring: 4 78% 49%;
+
+    /* Brand colors for widget theming */
+    --widget-primary: 232 39% 26%; /* #252c58 - Primary color for backgrounds, cards */
+    --widget-secondary: 350 74% 56%; /* #e73c4c - Secondary color for buttons, stripes */
+    --widget-primary-light: 232 39% 35%; /* Lighter variant of primary */
+    --widget-primary-dark: 232 39% 20%; /* Darker variant of primary */
+    --widget-text: 0 0% 100%; /* #FFFFFF - White text */
+    --widget-text-muted: 0 0% 80%; /* Light gray text */
+    
+    /* Widget gradients */
+    --widget-gradient-primary: linear-gradient(135deg, hsl(232 39% 26%), hsl(232 39% 35%));
+    --widget-gradient-secondary: linear-gradient(135deg, hsl(350 74% 56%), hsl(350 74% 66%));
+    --widget-gradient-hero: linear-gradient(180deg, hsl(232 39% 26%), hsl(232 39% 20%));
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 70%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-hover: 217 91% 65%;
+    --primary-light: 217 91% 80%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 142 76% 46%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 142 76% 56%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(217 91% 70%), hsl(220 91% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(217 91% 70%), hsl(210 100% 66%));
+    
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Professional animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+
+  /* Focus styles */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  /* Text utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

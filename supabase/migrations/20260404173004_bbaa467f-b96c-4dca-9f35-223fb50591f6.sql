@@ -1,0 +1,1 @@
+DELETE FROM settings WHERE key IN ('quipu.app_id', 'quipu.app_secret');

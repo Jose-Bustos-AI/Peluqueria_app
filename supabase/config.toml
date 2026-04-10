@@ -1,0 +1,96 @@
+project_id = "gxofivnfnzefpfkzwqpe"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+enabled = true
+port = 54325
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+port = 54326
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://gxofivnfnzefpfkzwqpe.supabase.co"]
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+security_update_password_require_reauthentication = true
+
+[edge_runtime]
+enabled = true
+port = 54327
+
+[functions.change-user-password]
+verify_jwt = false
+
+[functions.create-admin-user]
+verify_jwt = false
+
+[functions.create-class-checkout]
+verify_jwt = false
+
+[functions.delete-professional]
+verify_jwt = false
+
+[functions.fix-missing-payments]
+verify_jwt = false
+
+[functions.seed-superadmin]
+verify_jwt = false
+
+[functions.test-n8n-webhook]
+verify_jwt = false
+
+[functions.test-stripe]
+verify_jwt = false
+
+[functions.get-stripe-config]
+verify_jwt = false
+
+[functions.create-service-checkout]
+verify_jwt = false
+
+[functions.create-subscription-checkout]
+verify_jwt = false
+
+[functions.cancel-subscription]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+[functions.create-voucher-checkout]
+verify_jwt = false
+
+[functions.cancel-booking-public]
+verify_jwt = false
+
+[functions.fix-subscription-bookings]
+verify_jwt = false
+
+[functions.clean-test-data]
+verify_jwt = false
+
+[functions.send-booking-webhook]
+verify_jwt = false
+
+[functions.send-generic-webhook]
+verify_jwt = false

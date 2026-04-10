@@ -1354,7 +1354,7 @@ export default function Widget() {
     <div className="space-y-1">
       {/* Especialistas destacados */}
       {!professionalsError && (professionals.length > 0 || professionalsLoading) && (
-        <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+        <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
           <div className="bg-secondary px-4 py-2">
             <h2 className="text-white font-semibold text-lg">Especialistas destacados</h2>
           </div>
@@ -1424,7 +1424,7 @@ export default function Widget() {
       )}
 
       {/* Centro Pleno */}
-      <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+      <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
         <div className="bg-secondary px-4 py-2 flex items-center justify-between">
           <h2 className="text-white font-semibold text-lg">Centro Pleno</h2>
           <ChevronRight className="w-5 h-5 text-white" />
@@ -1464,7 +1464,7 @@ export default function Widget() {
       </div>
 
       {/* Tratamientos */}
-      <div id="home-tratamientos" className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+      <div id="home-tratamientos" className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
         <div className="bg-secondary px-4 py-2 flex items-center justify-between">
           <h2 className="text-white font-semibold text-lg">Tratamientos</h2>
           <ChevronRight className="w-5 h-5 text-white" />
@@ -1551,7 +1551,7 @@ export default function Widget() {
 
       {/* Planes - only show if enabled and has data */}
       {widgetSettings.show_plans && (publicVouchers.length > 0 || publicPlans.length > 0) && (
-        <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+        <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
           <div className="bg-secondary px-4 py-2">
             <h2 className="text-white font-semibold text-lg">Planes</h2>
           </div>
@@ -1632,7 +1632,7 @@ export default function Widget() {
       <div className="space-y-4">
         {/* Professional Header */}
         {selectedProfessional && (
-          <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+          <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
             <div className="px-4 py-4">
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
@@ -1683,7 +1683,7 @@ export default function Widget() {
             <div 
               key={service.id} 
               className="rounded-lg overflow-hidden cursor-pointer transition-colors hover:bg-white/5" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => {
                 setSelectedService({
                   ...service,
@@ -1748,7 +1748,7 @@ export default function Widget() {
                 <div 
                   key={classItem.id}
                   className="flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors hover:bg-white/5"
-                  style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+                  style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
                   onClick={() => handleClassClick(classItem)}
                 >
                   <div className="flex items-center gap-3">
@@ -1799,7 +1799,7 @@ export default function Widget() {
               <div 
                 key={voucher.id}
                 className="p-4 rounded-lg cursor-pointer transition-transform hover:scale-[1.02]"
-                style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+                style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
                 onClick={() => { setSelectedVoucherId(voucher.id); setCurrentView('voucher-detail'); }}
               >
                 <div className="flex items-center gap-3">
@@ -1982,7 +1982,7 @@ export default function Widget() {
                 <div 
                   key={category.id} 
                   className="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-white/5 transition-colors" 
-                  style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+                  style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
                   onClick={() => handleCategoryClick(category)}
                 >
                   <div className="flex items-center gap-3">
@@ -2029,7 +2029,7 @@ export default function Widget() {
           <div className="space-y-3">
             <div 
               className="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-white/5 transition-colors" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => setCurrentView('bonos')}
             >
               <div className="flex items-center gap-3">
@@ -2046,7 +2046,7 @@ export default function Widget() {
             
             <div 
               className="flex items-center justify-between p-3 rounded-lg cursor-pointer hover:bg-white/5 transition-colors" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => setCurrentView('suscripciones')}
             >
               <div className="flex items-center gap-3">
@@ -2099,7 +2099,7 @@ export default function Widget() {
       <div className="space-y-4">
         {/* Category Header */}
         {selectedCategory && (
-          <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+          <div className="rounded-lg overflow-hidden" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
             <div className="px-4 py-4">
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 bg-gray-300 rounded flex items-center justify-center overflow-hidden">
@@ -2133,7 +2133,7 @@ export default function Widget() {
           <div className="space-y-3">
             <h3 className="text-white font-medium px-2">Servicios disponibles</h3>
             {Array.from({ length: 2 }).map((_, index) => (
-              <div key={index} className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+              <div key={index} className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gray-300/50 rounded animate-pulse"></div>
                   <div className="flex-1">
@@ -2147,7 +2147,7 @@ export default function Widget() {
         ) : servicesError ? (
           <div className="space-y-3">
             <h3 className="text-white font-medium px-2">Servicios disponibles</h3>
-            <div className="text-center py-4 px-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div className="text-center py-4 px-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <p className="text-white/80 text-sm">{servicesError}</p>
             </div>
           </div>
@@ -2158,7 +2158,7 @@ export default function Widget() {
               <div 
                 key={service.id} 
                 className="flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors hover:bg-white/5" 
-                style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+                style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
                 onClick={() => handleServiceClick(service)}
               >
                 <div className="flex items-center gap-3">
@@ -2192,7 +2192,7 @@ export default function Widget() {
           <div className="space-y-3">
             <h3 className="text-white font-medium px-2">Clases disponibles</h3>
             {Array.from({ length: 2 }).map((_, index) => (
-              <div key={index} className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+              <div key={index} className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gray-300/50 rounded animate-pulse"></div>
                   <div className="flex-1">
@@ -2206,7 +2206,7 @@ export default function Widget() {
         ) : classesError ? (
           <div className="space-y-3">
             <h3 className="text-white font-medium px-2">Clases disponibles</h3>
-            <div className="text-center py-4 px-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div className="text-center py-4 px-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <p className="text-white/80 text-sm">{classesError}</p>
             </div>
           </div>
@@ -2219,7 +2219,7 @@ export default function Widget() {
                 <div 
                   key={classItem.id} 
                   className="flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors hover:bg-white/5" 
-                  style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+                  style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
                   onClick={() => handleClassClick(classItem)}
                 >
                   <div className="flex items-center gap-3">
@@ -2270,7 +2270,7 @@ export default function Widget() {
 
         {/* Empty state if both services and classes are empty */}
         {!servicesLoading && !classesLoading && services.length === 0 && classes.length === 0 && (
-          <div className="text-center py-8 px-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+          <div className="text-center py-8 px-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
             <p className="text-white/80 text-sm">No hay servicios ni clases disponibles en esta categoría</p>
           </div>
         )}
@@ -2306,10 +2306,10 @@ export default function Widget() {
         </div>
 
         {/* Details Section */}
-        <div className="bg-red-500 p-3 rounded-lg">
+        <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}>
           <h3 className="text-white font-semibold">Detalles</h3>
         </div>
-        <div className="space-y-2 p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+        <div className="space-y-2 p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
           <div className="flex items-center gap-2 text-white">
             <Clock className="w-4 h-4" />
             <span>{selectedService.duration_min} min</span>
@@ -2319,10 +2319,10 @@ export default function Widget() {
         {/* Specialists Section */}
         {mainProfessional && (
           <>
-            <div className="bg-red-500 p-3 rounded-lg">
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}>
               <h3 className="text-white font-semibold">Especialistas</h3>
             </div>
-            <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                   {mainProfessional.photo_url ? (
@@ -2350,7 +2350,7 @@ export default function Widget() {
 
         {/* Book Button */}
         <Button 
-          className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 text-lg rounded-lg"
+          className="w-full text-white font-semibold py-4 text-lg rounded-lg hover:opacity-90" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}
           onClick={() => {
             setSelectedClass(null); // Asegurar limpieza antes de navegar
             // Limpiar cualquier parámetro de suscripción en la URL
@@ -2392,10 +2392,10 @@ export default function Widget() {
         </div>
 
         {/* Details Section */}
-        <div className="bg-red-500 p-3 rounded-lg">
+        <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}>
           <h3 className="text-white font-semibold">Detalles</h3>
         </div>
-        <div className="space-y-2 p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+        <div className="space-y-2 p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
           <div className="flex items-center gap-2 text-white">
             <Clock className="w-4 h-4" />
             <span>{selectedClass.duration_min} min</span>
@@ -2409,10 +2409,10 @@ export default function Widget() {
         {/* Specialists Section */}
         {mainProfessional && (
           <>
-            <div className="bg-red-500 p-3 rounded-lg">
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}>
               <h3 className="text-white font-semibold">Especialistas</h3>
             </div>
-            <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
                   {mainProfessional.photo_url ? (
@@ -2439,10 +2439,10 @@ export default function Widget() {
         {/* Description Section */}
         {selectedClass.description && (
           <>
-            <div className="bg-red-500 p-3 rounded-lg">
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}>
               <h3 className="text-white font-semibold">Descripción</h3>
             </div>
-            <div className="p-3 rounded-lg" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div className="p-3 rounded-lg" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <p className="text-white/90 text-sm">{selectedClass.description}</p>
             </div>
           </>
@@ -2450,7 +2450,7 @@ export default function Widget() {
 
         {/* Book Button */}
         <Button 
-          className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-4 text-lg rounded-lg"
+          className="w-full text-white font-semibold py-4 text-lg rounded-lg hover:opacity-90" style={{ backgroundColor: 'var(--widget-secondary, #ef4444)' }}
           onClick={() => {
             setSelectedService(null); // Asegurar limpieza antes de navegar
             // Limpiar cualquier parámetro de suscripción en la URL
@@ -2510,7 +2510,7 @@ export default function Widget() {
       {vouchersLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 bg-gray-300/50 rounded"></div>
                 <div className="flex-1">
@@ -2540,7 +2540,7 @@ export default function Widget() {
             <div 
               key={voucher.id} 
               className="p-4 rounded-lg cursor-pointer transition-transform hover:scale-[1.02]" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => {
                 setSelectedVoucherId(voucher.id);
                 setCurrentView('voucher-detail');
@@ -2593,7 +2593,7 @@ export default function Widget() {
       {plansLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 bg-gray-300/50 rounded"></div>
                 <div className="flex-1">
@@ -2623,7 +2623,7 @@ export default function Widget() {
             <div 
               key={plan.id} 
               className="p-4 rounded-lg cursor-pointer transition-colors hover:bg-white/5" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => {
                 console.log('[SubsList] click planId=', plan.id);
                 setSelectedPlanId(plan.id);
@@ -2681,7 +2681,7 @@ export default function Widget() {
       ) : userVouchersLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 2 }).map((_, index) => (
-            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 bg-gray-300/50 rounded"></div>
                 <div className="flex-1">
@@ -2717,7 +2717,7 @@ export default function Widget() {
             <div 
               key={voucher.id} 
               className="p-4 rounded-lg cursor-pointer transition-transform hover:scale-[1.02]" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => {
                 // Use the actual voucher.id (user's voucher instance) for detail view
                 setSelectedVoucherId(voucher.id);
@@ -2771,7 +2771,7 @@ export default function Widget() {
       ) : userSubscriptionsLoading ? (
         <div className="space-y-3">
           {Array.from({ length: 2 }).map((_, index) => (
-            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+            <div key={index} className="p-4 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
               <div className="flex items-center gap-3">
                 <div className="w-16 h-16 bg-gray-300/50 rounded"></div>
                 <div className="flex-1">
@@ -2807,7 +2807,7 @@ export default function Widget() {
             <div 
               key={subscription.id} 
               className="p-4 rounded-lg cursor-pointer transition-colors hover:bg-white/5" 
-              style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}
+              style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}
               onClick={() => {
                 setSelectedSubscriptionId(subscription.id);
                 setCurrentView('subscription-detail');
@@ -2883,7 +2883,7 @@ export default function Widget() {
   // Auth gate: show login if no session
   if (isAuthChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
         <div className="text-white">Cargando...</div>
       </div>
     );
@@ -2891,7 +2891,7 @@ export default function Widget() {
 
   if (!authUserId) {
     return (
-      <div className="min-h-screen text-foreground max-w-sm mx-auto" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+      <div className="min-h-screen text-foreground max-w-sm mx-auto" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
         <WidgetAuth
           onSuccess={(authId, shadowUser) => {
             setAuthUserId(authId);
@@ -2905,7 +2905,7 @@ export default function Widget() {
   }
 
   return (
-    <div className="min-h-screen text-foreground overflow-hidden max-w-sm mx-auto" style={{ backgroundColor: 'rgba(37, 44, 88, 1)' }}>
+    <div className="min-h-screen text-foreground overflow-hidden max-w-sm mx-auto" style={{ backgroundColor: 'var(--widget-primary, rgba(37, 44, 88, 1))' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
         <button 

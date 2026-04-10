@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Building2, Edit, Eye, EyeOff } from "lucide-react"
+import { Building2, Edit, Eye, EyeOff, LogIn } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { useActiveOrganization } from "@/hooks/useActiveOrganization"
 import { DataTable } from "@/components/ui/data-table"
 import { PageHeader } from "@/components/ui/page-header"
 import { supabase } from "@/integrations/supabase/client"
@@ -60,6 +62,13 @@ export default function Organizations() {
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const { toast } = useToast()
+  const navigate = useNavigate()
+  const { setActiveOrgId } = useActiveOrganization()
+
+  const handleManageOrg = async (org: Organization) => {
+    await setActiveOrgId(org.id)
+    navigate('/admin')
+  }
 
   const form = useForm<OrganizationFormData>({
     defaultValues: {
@@ -159,6 +168,17 @@ export default function Organizations() {
             ) : (
               <Eye className="h-4 w-4" />
             )}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleManageOrg(row.original)
+            }}
+            title="Gestionar"
+          >
+            <LogIn className="h-4 w-4" />
           </Button>
         </div>
       ),

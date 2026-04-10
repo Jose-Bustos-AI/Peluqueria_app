@@ -28,6 +28,7 @@ import { Roles } from "./pages/admin/Roles";
 import Calendar from "./pages/admin/Calendar";
 import Settings from "./pages/admin/Settings";
 import Organizations from "./pages/admin/Organizations";
+import { ActiveOrganizationProvider } from "./hooks/useActiveOrganization";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,7 @@ const App = () => {
                 <AdminBootstrapProvider>
                   <PermissionsProvider>
                     <ProtectedAdminRoute>
+                      <ActiveOrganizationProvider>
                       <AdminLayout>
                         <Routes>
                       <Route index element={
@@ -147,6 +149,7 @@ const App = () => {
                       } />
                         </Routes>
                       </AdminLayout>
+                      </ActiveOrganizationProvider>
                     </ProtectedAdminRoute>
                   </PermissionsProvider>
                 </AdminBootstrapProvider>

@@ -1,4 +1,5 @@
-import { Bell, LogOut } from "lucide-react";
+import { Bell, LogOut, ArrowLeftCircle } from "lucide-react";
+import { useActiveOrganization } from "@/hooks/useActiveOrganization";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,6 +19,7 @@ export function AdminHeader() {
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { isManagingOrg, activeOrg, clearActiveOrgId } = useActiveOrganization();
  
   const handleLogout = async () => {
     try {
@@ -43,6 +45,20 @@ export function AdminHeader() {
       </div>
       
       <div className="flex items-center space-x-4">
+        {isManagingOrg && activeOrg && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              clearActiveOrgId();
+              navigate('/admin/organizations');
+            }}
+          >
+            <ArrowLeftCircle className="h-4 w-4 mr-2" />
+            Salir de {activeOrg.name}
+          </Button>
+        )}
+
         <Button variant="ghost" size="sm">
           <Bell className="h-4 w-4" />
         </Button>

@@ -31,6 +31,7 @@ export interface AdminUser {
   active: boolean | null;
   professional_id: string | null;
   allowed_sections: string[] | null;
+  organization_id: string | null;
 }
 
 interface PermissionsContextType {

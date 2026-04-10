@@ -30,6 +30,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { usePermissions } from "@/hooks/usePermissions";
+import { useActiveOrganization } from "@/hooks/useActiveOrganization";
 
 const menuItems = [
   { title: "Dashboard", url: "/admin", icon: LayoutDashboard, section: "dashboard" },
@@ -59,6 +60,7 @@ export function AdminSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
   const { hasPermission } = usePermissions();
+  const { isSuperadmin, isManagingOrg, activeOrg } = useActiveOrganization();
   const collapsed = state === "collapsed";
 
   const isActive = (path: string) => {
@@ -74,9 +76,14 @@ export function AdminSidebar() {
       : "hover:bg-muted/50 text-muted-foreground hover:text-foreground";
 
   // Filter menu items based on permissions
-  const filteredMenuItems = menuItems.filter(item => hasPermission(item.section));
-  const filteredCatalogItems = catalogItems.filter(item => hasPermission(item.section)); 
-  const filteredSystemItems = systemItems.filter(item => hasPermission(item.section));
+  // Superadmin sin org activa: solo mostrar Organizaciones
+  const superadminNoOrg = isSuperadmin && !isManagingOrg;
+  const filteredMenuItems = superadminNoOrg ? [] : menuItems.filter(item => hasPermission(item.section));
+  const filteredCatalogItems = superadminNoOrg ? [] : catalogItems.filter(item => hasPermission(item.section));
+  const filteredSystemItems = systemItems.filter(item => {
+    if (superadminNoOrg) return item.section === 'organizations';
+    return hasPermission(item.section);
+  });
 
   return (
     <Sidebar className={collapsed ? "w-14" : "w-64"} collapsible="icon">
@@ -88,6 +95,13 @@ export function AdminSidebar() {
         )}
         
         <SidebarTrigger className="absolute -right-3 top-6 z-10 h-6 w-6 bg-primary text-primary-foreground hover:bg-primary-hover" />
+
+        {!collapsed && isManagingOrg && activeOrg && (
+          <div className="mx-2 mt-2 px-3 py-2 rounded-md bg-primary/10 border border-primary/20">
+            <div className="text-xs text-muted-foreground">Gestionando</div>
+            <div className="text-sm font-medium text-primary truncate">{activeOrg.name}</div>
+          </div>
+        )}
 
         {filteredMenuItems.length > 0 && (
           <SidebarGroup>
